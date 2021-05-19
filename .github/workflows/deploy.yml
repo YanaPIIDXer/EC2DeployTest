@@ -17,7 +17,7 @@ jobs:
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ec2-user@ec2-deploy-test.yanap-apptest.tk '
           cd /home/ec2-user &&
+          rm -rf EC2DeployTest &&
           git clone https://github.com/YanaPIIDXer/EC2DeployTest.git &&
-          sudo cp EC2DeployTest/html/* /var/www/html/ &&
-          rm -rf EC2DeployTest
+          sudo cp EC2DeployTest/html/* /var/www/html/
           '
