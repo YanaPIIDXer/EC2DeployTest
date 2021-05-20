@@ -58,6 +58,13 @@ resource "aws_security_group" "sg" {
         cidr_blocks      = ["0.0.0.0/0"]
     }
 
+    ingress {
+        from_port        = 3389
+        to_port          = 3389
+        protocol         = "TCP"
+        cidr_blocks      = ["0.0.0.0/0"]
+    }
+
     egress {
         from_port        = 0
         to_port          = 0
@@ -68,19 +75,12 @@ resource "aws_security_group" "sg" {
 }
 
 resource "aws_instance" "main" {
-  ami           = "ami-0ca38c7440de1749a"
+  ami           = "ami-09cf6a62116b95ed8"
   instance_type = "t2.micro"
   subnet_id = aws_subnet.public.id
   key_name = "key"
   security_groups = [aws_security_group.sg.id]
   associate_public_ip_address = true
-
-  user_data = <<EOF
-#!/bin/bash
-
-sudo yum install -y httpd git
-sudo systemctl start httpd.service
-EOF
 
   tags = {
       Name = "EC2DeployTest"
